@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.chatwith.app.MainActivity
 import com.chatwith.app.R
 import com.chatwith.app.databinding.ActivitySplashScreenBinding
+import com.chatwith.app.ui.sigh_up_and_login.SignUp
 
 class SplashScreen : AppCompatActivity() {
     private lateinit var binding: ActivitySplashScreenBinding
@@ -34,7 +35,7 @@ class SplashScreen : AppCompatActivity() {
         }
 
         Handler().postDelayed({
-            startActivity(Intent(this@SplashScreen, MainActivity::class.java))
+            startActivity(Intent(this@SplashScreen, SignUp::class.java))
             finish()
         }, timeOut.toLong())
     }
