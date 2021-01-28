@@ -19,6 +19,7 @@
             app:layout_constraintStart_toStartOf="parent">
 
             <ImageView
+                android:id="@+id/userImage"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:scaleType="fitXY"
@@ -29,7 +30,6 @@
             android:id="@+id/userName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="zzzzzzzzzz"
             android:textColor="@android:color/white"
             android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@+id/useEmail"
@@ -39,7 +39,6 @@
             android:id="@+id/useEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="xxxxxxxxxxxxxxxxxxxxx"
             android:textColor="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
