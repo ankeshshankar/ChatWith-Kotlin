@@ -155,11 +155,15 @@
                         app:layout_constraintTop_toBottomOf="@+id/orText">
 
                         <ImageView
+                            android:id="@+id/googleCLick"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_columnWeight="1"
                             android:layout_rowWeight="1"
                             android:src="@drawable/ic_google"
+                            android:clickable="true"
+                            android:focusable="true"
+                            tools:ignore="ContentDescription"
                             tools:targetApi="lollipop" />
 
                         <ImageView
@@ -168,6 +172,7 @@
                             android:layout_columnWeight="1"
                             android:layout_rowWeight="1"
                             android:src="@drawable/ic_facebook"
+                            tools:ignore="ContentDescription"
                             tools:targetApi="lollipop" />
                         <ImageView
                             android:layout_width="wrap_content"
@@ -175,6 +180,7 @@
                             android:layout_columnWeight="1"
                             android:layout_rowWeight="1"
                             android:src="@drawable/ic_twitter"
+                            tools:ignore="ContentDescription"
                             tools:targetApi="lollipop" />
 
 
