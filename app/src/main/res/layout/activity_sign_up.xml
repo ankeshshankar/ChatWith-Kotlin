@@ -63,6 +63,7 @@
                         app:startIconDrawable="@drawable/ic_user">
 
                         <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/userName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="text" />
@@ -84,6 +85,29 @@
                         app:startIconDrawable="@drawable/ic_mail">
 
                         <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/useEmail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textEmailAddress" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textFieldPhoneNo"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginRight="30dp"
+                        android:hint="Phone Number"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textFieldEmail"
+                        app:startIconDrawable="@drawable/ic_phone">
+
+                        <com.google.android.material.textfield.TextInputEditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="textEmailAddress" />
@@ -102,10 +126,11 @@
                         app:endIconMode="password_toggle"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textFieldEmail"
+                        app:layout_constraintTop_toBottomOf="@+id/textFieldPhoneNo"
                         app:startIconDrawable="@drawable/ic_key">
 
                         <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/userPassword"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="textPassword" />

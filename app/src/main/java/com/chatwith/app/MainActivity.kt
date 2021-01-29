@@ -66,13 +66,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val userName = topView.findViewById<TextView>(R.id.userName)
         val userEmail = topView.findViewById<TextView>(R.id.useEmail)
         val userImage = topView.findViewById<ImageView>(R.id.userImage)
+
         userName.text = user?.displayName.toString()
         userEmail.text = user?.email.toString()
         Glide.with(this)
                 .load(user?.photoUrl)
                 .into(userImage)
-
-
     }
 
 

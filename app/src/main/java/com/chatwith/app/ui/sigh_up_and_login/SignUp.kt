@@ -86,6 +86,7 @@ class SignUp : AppCompatActivity() {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "signInWithCredential:success")
                         val user = auth?.currentUser
+
                         finish()
                         startActivity(Intent(this, MainActivity::class.java))
                         //updateUI(user)
