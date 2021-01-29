@@ -11,7 +11,7 @@ class MainChat : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainChatBinding.inflate(layoutInflater)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        title = "Ankesh Kumar"
+        title = intent.getStringExtra("username")
         setContentView(binding.root)
     }
 

@@ -8,7 +8,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.chatwith.app.R
 import com.chatwith.app.model.Chat
+import com.chatwith.app.notify.LoadChat
 import com.google.android.material.card.MaterialCardView
+import org.greenrobot.eventbus.EventBus
 
 class ChatListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -30,7 +32,8 @@ class ChatListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
              .into(holder.userImage)*/
         holder.itemView.findViewById<MaterialCardView>(R.id.cardView).apply {
             setOnClickListener {
-
+                val loadChat = LoadChat("CHAT", currentChat.username.toString())
+                EventBus.getDefault().post(loadChat)
             }
         }
     }

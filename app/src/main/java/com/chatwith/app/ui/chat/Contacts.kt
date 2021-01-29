@@ -27,7 +27,7 @@ class Contacts : AppCompatActivity() {
             this.layoutManager =
                 LinearLayoutManager(
                     this.context,
-                    LinearLayoutManager.HORIZONTAL,
+                    LinearLayoutManager.VERTICAL,
                     false
                 )
             this.itemAnimator = DefaultItemAnimator()

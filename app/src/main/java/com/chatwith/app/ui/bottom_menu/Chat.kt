@@ -11,7 +11,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.chatwith.app.adapter.ChatListAdapter
 import com.chatwith.app.databinding.FragmentChatBinding
 import com.chatwith.app.model.Chat
+import com.chatwith.app.notify.LoadChat
 import com.chatwith.app.ui.chat.Contacts
+import com.chatwith.app.ui.chat.MainChat
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
+
 
 class Chat : Fragment() {
     private lateinit var binding: FragmentChatBinding
@@ -30,7 +36,7 @@ class Chat : Fragment() {
             this.layoutManager =
                 LinearLayoutManager(
                     this.context,
-                    LinearLayoutManager.HORIZONTAL,
+                    LinearLayoutManager.VERTICAL,
                     false
                 )
             this.itemAnimator = DefaultItemAnimator()
@@ -39,12 +45,43 @@ class Chat : Fragment() {
         }
         val chatList = arrayListOf<Chat>()
         chatList.add(Chat("aaa", "Ankesh Kumar", "kumar.ankeshshiv@gmail.com", "fdsafds"))
+        chatList.add(Chat("aaaa", "Sarin Kumar", "kumar.ankeshshiv@gmail.com", "fdsafds"))
+        chatList.add(Chat("aaaaa", "Santosh kumar", "kumar.ankeshshiv@gmail.com", "fdsafds"))
 
         chatAdapter.apply {
             setData(chatList)
             notifyDataSetChanged()
         }
         return binding.root
+    }
+
+
+    override fun onStart() {
+        EventBus.getDefault().register(this)
+        super.onStart()
+    }
+
+
+    override fun onStop() {
+        EventBus.getDefault().unregister(this)
+        super.onStop()
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun loadChat(event: LoadChat) {
+        when (event.type) {
+            "CHAT" -> {
+                val intent = Intent(requireActivity(), MainChat::class.java)
+                intent.putExtra("username", event.name)
+                startActivity(intent)
+            }
+            "CONTACTS" -> requireActivity().startActivity(
+                Intent(
+                    requireActivity(),
+                    MainChat::class.java
+                )
+            )
+        }
     }
 
 }
