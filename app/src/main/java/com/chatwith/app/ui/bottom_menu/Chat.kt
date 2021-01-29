@@ -56,6 +56,7 @@ class Chat : Fragment() {
     }
 
 
+
     override fun onStart() {
         EventBus.getDefault().register(this)
         super.onStart()
@@ -75,12 +76,11 @@ class Chat : Fragment() {
                 intent.putExtra("username", event.name)
                 startActivity(intent)
             }
-            "CONTACTS" -> requireActivity().startActivity(
-                Intent(
-                    requireActivity(),
-                    MainChat::class.java
-                )
-            )
+            "CONTACTS" -> {
+                val intent = Intent(requireActivity(), MainChat::class.java)
+                intent.putExtra("username", event.name)
+                startActivity(intent)
+            }
         }
     }
 

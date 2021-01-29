@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.chatwith.app.R
 import com.chatwith.app.model.Users
 import com.chatwith.app.notify.LoadChat
@@ -27,12 +28,16 @@ class ChatListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         holder as ChatViewHolder
         holder.name.text = currentChat.username.toString()
         holder.email.text = currentChat.userEmail.toString()
-        /* Glide.with(this)
-             .load(currentChat.imageUrl)
-             .into(holder.userImage)*/
+        Glide.with(holder.itemView.context)
+            .load(currentChat.imageUrl)
+            .into(holder.userImage)
         holder.itemView.findViewById<MaterialCardView>(R.id.cardView).apply {
             setOnClickListener {
-                val loadChat = LoadChat("CHAT", currentChat.username.toString())
+                val loadChat = LoadChat(
+                    type = "CHAT",
+                    name = currentChat.username.toString(),
+                    receiverId = currentChat.uid.toString()
+                )
                 EventBus.getDefault().post(loadChat)
             }
         }

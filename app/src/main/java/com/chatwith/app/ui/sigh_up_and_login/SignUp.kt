@@ -88,7 +88,7 @@ class SignUp : AppCompatActivity() {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithCredential:success")
                     val user = auth?.currentUser
-                    var reference: DatabaseReference
+                    val reference: DatabaseReference
                     val rootNode: FirebaseDatabase = FirebaseDatabase.getInstance()
                     reference = rootNode.getReference("Users")
                     val newUser = Users(

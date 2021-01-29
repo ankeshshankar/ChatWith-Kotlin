@@ -9,7 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.chatwith.app.R
 import com.chatwith.app.model.Users
+import com.chatwith.app.notify.LoadChat
 import com.google.android.material.card.MaterialCardView
+import org.greenrobot.eventbus.EventBus
 
 class ContactLIstAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -31,7 +33,12 @@ class ContactLIstAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             .into(holder.userImage)
         holder.itemView.findViewById<MaterialCardView>(R.id.cardView).apply {
             setOnClickListener {
-
+                val loadChat = LoadChat(
+                    type = "CONTACTS",
+                    name = currentChat.username.toString(),
+                    receiverId = currentChat.uid.toString()
+                )
+                EventBus.getDefault().post(loadChat)
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.chatwith.app.ui.chat
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -8,8 +9,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.chatwith.app.adapter.ContactLIstAdapter
 import com.chatwith.app.databinding.ActivityContactsBinding
 import com.chatwith.app.model.Users
+import com.chatwith.app.notify.LoadChat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class Contacts : AppCompatActivity() {
     private lateinit var binding: ActivityContactsBinding
@@ -39,6 +44,30 @@ class Contacts : AppCompatActivity() {
         }
         readUser()
 
+    }
+
+
+    override fun onStart() {
+        EventBus.getDefault().register(this)
+        super.onStart()
+    }
+
+
+    override fun onStop() {
+        EventBus.getDefault().unregister(this)
+        super.onStop()
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun loadChat(event: LoadChat) {
+        when (event.type) {
+            "CONTACTS" -> {
+                val intent = Intent(this, MainChat::class.java)
+                intent.putExtra("username", event.name)
+                intent.putExtra("receiverId", event.receiverId)
+                startActivity(intent)
+            }
+        }
     }
 
 

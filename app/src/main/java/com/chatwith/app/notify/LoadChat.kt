@@ -1,3 +1,3 @@
 package com.chatwith.app.notify
 
-data class LoadChat(val type: String, val name: String)
+data class LoadChat(val type: String, val name: String, val receiverId: String)
