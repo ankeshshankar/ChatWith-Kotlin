@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.chatwith.app">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_chat_bubble"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/ic_chat_bubble"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.ChatWith">
+        <activity android:name=".ui.chat.MainChat"></activity>
+        <activity android:name=".ui.chat.Contacts" />
+        <activity
+            android:name=".ui.sigh_up_and_login.SignUp"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
+        <activity
+            android:name=".ui.splash_screen.SplashScreen"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
+    </application>
+
+</manifest>

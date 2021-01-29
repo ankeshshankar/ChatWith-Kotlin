@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">ChatWith</string>
+    <string name="chatwith">ChatWith</string>
+    <string name="sing_in">Sing in</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="sign_in">Sign In</string>
+    <string name="password">Password</string>
+    <string name="or">Or Sign in with</string>
+    <string name="logout">Logout</string>
+    <string name="chat">Chat</string>
+    <string name="history">History</string>
+    <string name="profile">Profile</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="activity">Activity</string>
+    <string name="openDrawer">Open Side Menu</string>
+    <string name="closeDrawer">Close Side Menu</string>
+</resources>
