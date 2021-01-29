@@ -6,13 +6,14 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.chatwith.app.R
-import com.chatwith.app.model.Chat
+import com.chatwith.app.model.Users
 import com.google.android.material.card.MaterialCardView
 
 class ContactLIstAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val chatList = ArrayList<Chat>()
+    private val chatList = ArrayList<Users>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         var view: View? = null
@@ -25,9 +26,9 @@ class ContactLIstAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         holder as ChatViewHolder
         holder.name.text = currentChat.username.toString()
         holder.email.text = currentChat.userEmail.toString()
-        /* Glide.with(this)
-             .load(currentChat.imageUrl)
-             .into(holder.userImage)*/
+        Glide.with(holder.itemView.context)
+            .load(currentChat.imageUrl)
+            .into(holder.userImage)
         holder.itemView.findViewById<MaterialCardView>(R.id.cardView).apply {
             setOnClickListener {
 
@@ -39,7 +40,7 @@ class ContactLIstAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         return chatList.size
     }
 
-    fun setData(newList: ArrayList<Chat>) {
+    fun setData(newList: ArrayList<Users>) {
         this.chatList.clear()
         this.chatList.addAll(newList)
     }

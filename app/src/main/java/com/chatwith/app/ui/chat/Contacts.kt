@@ -5,14 +5,17 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.chatwith.app.adapter.ChatListAdapter
+import com.chatwith.app.adapter.ContactLIstAdapter
 import com.chatwith.app.databinding.ActivityContactsBinding
-import com.chatwith.app.model.Chat
+import com.chatwith.app.model.Users
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 
 class Contacts : AppCompatActivity() {
     private lateinit var binding: ActivityContactsBinding
     private lateinit var auth: FirebaseAuth
+    private val chatAdapter = ContactLIstAdapter()
+    private val chatList = arrayListOf<Users>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -22,7 +25,7 @@ class Contacts : AppCompatActivity() {
         binding = ActivityContactsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val chatAdapter = ChatListAdapter()
+
         binding.newChatList.apply {
             this.layoutManager =
                 LinearLayoutManager(
@@ -34,13 +37,8 @@ class Contacts : AppCompatActivity() {
             this.adapter = chatAdapter
 
         }
-        val chatList = arrayListOf<Chat>()
-        chatList.add(Chat("aaa", "Ankesh Kumar", "kumar.ankeshshiv@gmail.com", "fdsafds"))
+        readUser()
 
-        chatAdapter.apply {
-            setData(chatList)
-            notifyDataSetChanged()
-        }
     }
 
 
@@ -54,6 +52,36 @@ class Contacts : AppCompatActivity() {
     }
 
     private fun readUser() {
+        val reference: DatabaseReference
+        val rootNode: FirebaseDatabase = FirebaseDatabase.getInstance()
+        val auth = FirebaseAuth.getInstance()
+        reference = rootNode.getReference("Users")
+        reference.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                chatList.clear()
+                /*  Log.e("data", snapshot.children.toString())*/
+                for (data in snapshot.children) {
+                    val user = Users(
+                        uid = data.child("uid").value.toString(),
+                        username = data.child("username").value.toString(),
+                        userEmail = data.child("userEmail").value.toString(),
+                        imageUrl = data.child("imageUrl").value.toString()
+                    )
+                    if (auth.currentUser?.uid != user.uid) {
+                        chatList.add(user)
+                    }
 
+                }
+                chatAdapter.apply {
+                    setData(chatList)
+                    notifyDataSetChanged()
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
     }
 }

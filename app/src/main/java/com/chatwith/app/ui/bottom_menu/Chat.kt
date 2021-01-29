@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chatwith.app.adapter.ChatListAdapter
 import com.chatwith.app.databinding.FragmentChatBinding
-import com.chatwith.app.model.Chat
+import com.chatwith.app.model.Users
 import com.chatwith.app.notify.LoadChat
 import com.chatwith.app.ui.chat.Contacts
 import com.chatwith.app.ui.chat.MainChat
@@ -43,10 +43,10 @@ class Chat : Fragment() {
             this.adapter = chatAdapter
 
         }
-        val chatList = arrayListOf<Chat>()
-        chatList.add(Chat("aaa", "Ankesh Kumar", "kumar.ankeshshiv@gmail.com", "fdsafds"))
-        chatList.add(Chat("aaaa", "Sarin Kumar", "kumar.ankeshshiv@gmail.com", "fdsafds"))
-        chatList.add(Chat("aaaaa", "Santosh kumar", "kumar.ankeshshiv@gmail.com", "fdsafds"))
+        val chatList = arrayListOf<Users>()
+        chatList.add(Users("aaa", "Ankesh Kumar", "kumar.ankeshshiv@gmail.com", "fdsafds"))
+        chatList.add(Users("aaaa", "Sarin Kumar", "kumar.ankeshshiv@gmail.com", "fdsafds"))
+        chatList.add(Users("aaaaa", "Santosh kumar", "kumar.ankeshshiv@gmail.com", "fdsafds"))
 
         chatAdapter.apply {
             setData(chatList)

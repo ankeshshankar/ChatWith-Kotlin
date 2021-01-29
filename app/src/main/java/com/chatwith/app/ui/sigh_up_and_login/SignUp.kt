@@ -7,18 +7,19 @@ import androidx.appcompat.app.AppCompatActivity
 import com.chatwith.app.MainActivity
 import com.chatwith.app.R
 import com.chatwith.app.databinding.ActivitySignUpBinding
+import com.chatwith.app.model.Users
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 class SignUp : AppCompatActivity() {
 
     companion object {
-        //a constant for detecting the login intent result
-        // private const val RC_SIGN_IN = 234
         private const val RC_SIGN_IN = 300
         private const val TAG = "golaaaa"
     }
@@ -32,9 +33,9 @@ class SignUp : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         // Configure Google Sign In
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build()
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
@@ -80,26 +81,75 @@ class SignUp : AppCompatActivity() {
 
     private fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
+
         auth?.signInWithCredential(credential)
-                ?.addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        // Sign in success, update UI with the signed-in user's information
-                        Log.d(TAG, "signInWithCredential:success")
-                        val user = auth?.currentUser
-
-                        finish()
-                        startActivity(Intent(this, MainActivity::class.java))
-                        //updateUI(user)
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Log.w(TAG, "signInWithCredential:failure", task.exception)
-                        // ...
-                        //  Snackbar.make(view, "Authentication Failed.", Snackbar.LENGTH_SHORT).show()
-                        //updateUI(null)
-                    }
-
+            ?.addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(TAG, "signInWithCredential:success")
+                    val user = auth?.currentUser
+                    var reference: DatabaseReference
+                    val rootNode: FirebaseDatabase = FirebaseDatabase.getInstance()
+                    reference = rootNode.getReference("Users")
+                    val newUser = Users(
+                        uid = user?.uid,
+                        username = user?.displayName,
+                        userEmail = user?.email,
+                        imageUrl = user?.photoUrl.toString()
+                    )
+                    reference.child(newUser.uid.toString()).setValue(newUser)
+                    finish()
+                    startActivity(Intent(this, MainActivity::class.java))
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG, "signInWithCredential:failure", task.exception)
                     // ...
+                    //  Snackbar.make(view, "Authentication Failed.", Snackbar.LENGTH_SHORT).show()
+                    //updateUI(null)
                 }
+
+                // ...
+            }
     }
 
 }
+
+
+//                    if (user?.phoneNumber != null) {
+//                        reference = rootNode.getRefere    nce("Users")
+//                        val newUser = User(
+//                            username = user.displayName,
+//                            userEmail = user.email,
+//                            imageUrl = user.photoUrl.toString(),
+//                            phoneNumber = user.phoneNumber
+//                        )
+//                        reference.child(user.phoneNumber.toString()).setValue(newUser)
+//                    } else {
+//
+//
+//
+//
+//                        var empty = true
+//                        binding.textFieldPassword.visibility = View.GONE
+//                        binding.googleOption.visibility = View.GONE
+//                        if (binding.userPhoneNumber.text!!.isEmpty() || binding.userPhoneNumber.text!!.isEmpty()) {
+//                            val aa = binding.userPhoneNumber.parent.parent as TextInputLayout
+//                            aa.error = "Empty"
+//                            empty = true
+//                        } else {
+//                            empty = false
+//                        }
+//
+//                        if (!empty) {
+//                            reference = rootNode.getReference("Users")
+//                            val newUser = User(
+//                                username = user?.displayName,
+//                                userEmail = user?.email,
+//                                imageUrl = user?.photoUrl.toString(),
+//                                phoneNumber = binding.userPhoneNumber.text.toString()
+//                            )
+//                            reference.child(binding.userPhoneNumber.text.toString())
+//                                .setValue(newUser)
+//                            finish()
+//                            startActivity(Intent(this, MainActivity::class.java))
+//                        }

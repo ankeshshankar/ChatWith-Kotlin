@@ -7,14 +7,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.chatwith.app.R
-import com.chatwith.app.model.Chat
+import com.chatwith.app.model.Users
 import com.chatwith.app.notify.LoadChat
 import com.google.android.material.card.MaterialCardView
 import org.greenrobot.eventbus.EventBus
 
 class ChatListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val chatList = ArrayList<Chat>()
+    private val chatList = ArrayList<Users>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         var view: View? = null
@@ -42,7 +42,7 @@ class ChatListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         return chatList.size
     }
 
-    fun setData(newList: ArrayList<Chat>) {
+    fun setData(newList: ArrayList<Users>) {
         this.chatList.clear()
         this.chatList.addAll(newList)
     }
