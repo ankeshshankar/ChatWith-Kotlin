@@ -1,5 +1,6 @@
 package com.chatwith.app.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import com.chatwith.app.R
 import com.chatwith.app.model.Message
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import java.text.SimpleDateFormat
 
 class MessageAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -32,16 +34,33 @@ class MessageAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     }
 
+    @SuppressLint("SimpleDateFormat")
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val message = messageList[position]
         when (getItemViewType(position)) {
             RECEIVED -> {
                 holder as MessageViewHolderReceiver
                 holder.message.text = message.message
+                val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
+                try {
+                    val date = format.parse(message.timestamp)
+                    holder.messageTime.text = "${date.hours}:${date.minutes}"
+                } catch (e: Exception) {
+                    println(e)
+                }
+
+
             }
             SEND -> {
                 holder as MessageViewHolderSender
                 holder.message.text = message.message
+                val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
+                try {
+                    val date = format.parse(message.timestamp)
+                    holder.messageTime.text = "${date.hours}:${date.minutes}"
+                } catch (e: Exception) {
+                    println(e)
+                }
             }
         }
 

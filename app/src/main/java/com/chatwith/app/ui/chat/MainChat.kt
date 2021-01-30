@@ -33,7 +33,7 @@ class MainChat : AppCompatActivity() {
 
             if (binding.edtInput.text!!.isNotEmpty() || binding.edtInput.text!!.isNotBlank()) {
                 val message = binding.edtInput.text.toString()
-                val timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+                val timestamp = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(Date())
                 sendMessage(
                     sender = auth.currentUser?.uid.toString(),
                     receiver = intent.getStringExtra("receiverId").toString(),

@@ -15,9 +15,9 @@
         android:background="@drawable/chat_background_left"
         android:maxWidth="240dp"
         android:padding="8dp"
-        android:text="hi man, how are you?"
-        android:textColor="@color/black"
+        android:layout_marginStart="8dp"
         app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@color/white"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -26,7 +26,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginLeft="4dp"
-        android:text="11:40"
         android:textColor="#303133"
         android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="@id/text_message_body"
