@@ -14,6 +14,8 @@ import com.chatwith.app.model.Users
 import com.chatwith.app.notify.LoadChat
 import com.chatwith.app.ui.chat.Contacts
 import com.chatwith.app.ui.chat.MainChat
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -21,6 +23,8 @@ import org.greenrobot.eventbus.ThreadMode
 
 class Chat : Fragment() {
     private lateinit var binding: FragmentChatBinding
+    private val chatList = arrayListOf<Users>()
+    private val chatAdapter = ChatListAdapter()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -31,7 +35,7 @@ class Chat : Fragment() {
         binding.floatingActionButton.setOnClickListener {
             startActivity(Intent(activity, Contacts::class.java))
         }
-        val chatAdapter = ChatListAdapter()
+
         binding.cartRecycle.apply {
             this.layoutManager =
                 LinearLayoutManager(
@@ -43,19 +47,47 @@ class Chat : Fragment() {
             this.adapter = chatAdapter
 
         }
-        val chatList = arrayListOf<Users>()
-        chatList.add(Users("aaa", "Ankesh Kumar", "kumar.ankeshshiv@gmail.com", "fdsafds"))
-        chatList.add(Users("aaaa", "Sarin Kumar", "kumar.ankeshshiv@gmail.com", "fdsafds"))
-        chatList.add(Users("aaaaa", "Santosh kumar", "kumar.ankeshshiv@gmail.com", "fdsafds"))
-
-        chatAdapter.apply {
-            setData(chatList)
-            notifyDataSetChanged()
-        }
+        binding.chatShimmer.visibility = View.VISIBLE
+        binding.chatShimmer.startShimmer()
+        readUser()
         return binding.root
     }
 
+    private fun readUser() {
+        val reference: DatabaseReference
+        val rootNode: FirebaseDatabase = FirebaseDatabase.getInstance()
+        val auth = FirebaseAuth.getInstance()
+        reference = rootNode.getReference("Users")
+        reference.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                chatList.clear()
+                /*  Log.e("data", snapshot.children.toString())*/
+                for (data in snapshot.children) {
+                    val user = Users(
+                        uid = data.child("uid").value.toString(),
+                        username = data.child("username").value.toString(),
+                        userEmail = data.child("userEmail").value.toString(),
+                        imageUrl = data.child("imageUrl").value.toString()
+                    )
+                    if (auth.currentUser?.uid != user.uid) {
+                        chatList.add(user)
+                    }
 
+                }
+                chatAdapter.apply {
+                    setData(chatList)
+                    binding.chatShimmer.stopShimmer()
+                    binding.chatShimmer.visibility = View.GONE
+                    notifyDataSetChanged()
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
 
     override fun onStart() {
         EventBus.getDefault().register(this)

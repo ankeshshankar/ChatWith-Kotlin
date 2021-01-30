@@ -3,6 +3,7 @@ package com.chatwith.app.ui.chat
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -42,6 +43,8 @@ class Contacts : AppCompatActivity() {
             this.adapter = chatAdapter
 
         }
+        binding.chatShimmer.visibility = View.VISIBLE
+        binding.chatShimmer.startShimmer()
         readUser()
 
     }
@@ -103,6 +106,8 @@ class Contacts : AppCompatActivity() {
                 }
                 chatAdapter.apply {
                     setData(chatList)
+                    binding.chatShimmer.visibility = View.GONE
+                    binding.chatShimmer.stopShimmer()
                     notifyDataSetChanged()
                 }
             }
