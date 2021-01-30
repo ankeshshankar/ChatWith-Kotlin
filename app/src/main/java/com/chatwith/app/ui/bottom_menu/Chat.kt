@@ -104,13 +104,15 @@ class Chat : Fragment() {
     fun loadChat(event: LoadChat) {
         when (event.type) {
             "CHAT" -> {
-                val intent = Intent(requireActivity(), MainChat::class.java)
+                val intent = Intent(requireContext(), MainChat::class.java)
                 intent.putExtra("username", event.name)
+                intent.putExtra("receiverId", event.receiverId)
                 startActivity(intent)
             }
             "CONTACTS" -> {
-                val intent = Intent(requireActivity(), MainChat::class.java)
+                val intent = Intent(requireContext(), MainChat::class.java)
                 intent.putExtra("username", event.name)
+                intent.putExtra("receiverId", event.receiverId)
                 startActivity(intent)
             }
         }

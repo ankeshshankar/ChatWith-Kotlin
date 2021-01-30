@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import java.text.SimpleDateFormat
 
+@Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class MessageAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val RECEIVED = 0
@@ -24,17 +25,17 @@ class MessageAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         var view: View? = null
         return if (viewType == SEND) {
             view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_message_sent, parent, false)
+                    .inflate(R.layout.item_message_sent, parent, false)
             MessageViewHolderSender(view)
         } else {
             view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_message_received, parent, false)
+                    .inflate(R.layout.item_message_received, parent, false)
             MessageViewHolderReceiver(view)
         }
 
     }
 
-    @SuppressLint("SimpleDateFormat")
+    @SuppressLint("SimpleDateFormat", "SetTextI18n")
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val message = messageList[position]
         when (getItemViewType(position)) {
