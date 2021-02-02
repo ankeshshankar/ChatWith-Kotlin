@@ -2,9 +2,7 @@ package com.chatwith.app.ui.chat
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
-import android.widget.AbsListView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -15,15 +13,17 @@ import com.chatwith.app.databinding.ActivityMainChatBinding
 import com.chatwith.app.model.Message
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import org.greenrobot.eventbus.EventBus
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.HashMap
+
 
 class MainChat : AppCompatActivity() {
     private lateinit var binding: ActivityMainChatBinding
     private val messageAdapter = MessageAdapter()
     private val messageList = arrayListOf<Message>()
-
+    private lateinit var auth :FirebaseAuth
     @SuppressLint("SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +31,7 @@ class MainChat : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         title = intent.getStringExtra("username")
         setContentView(binding.root)
-        val auth = FirebaseAuth.getInstance()
+        auth = FirebaseAuth.getInstance()
         binding.userImage.setOnClickListener {
 
             if (binding.edtInput.text!!.isNotEmpty() || binding.edtInput.text!!.isNotBlank()) {
@@ -62,18 +62,39 @@ class MainChat : AppCompatActivity() {
 
         }
         binding.newChatList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dy > 0) {
+                    //Scrolling down
+                } else if (dy < 0) {
+                    readMessage(
+                            auth.currentUser?.uid.toString(),
+                            intent.getStringExtra("receiverId").toString(),
+                            "second")
+                }
+            }
+        })
 
-            var scroll = false
+
+
+
+
+
+
+
+
+
+
+      /*      var scroll = false
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 when (newState) {
                     AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL -> {
                         scroll = true
-                       /* readMessage(
+                       *//* readMessage(
                                 auth.currentUser?.uid.toString(),
                                 intent.getStringExtra("receiverId").toString(),
                                 "second"
-                        )*/
+                        )*//*
 
                     }
                 }
@@ -92,16 +113,16 @@ class MainChat : AppCompatActivity() {
                 scroll = false
 
                 super.onScrolled(recyclerView, dx, dy)
-            }
-        })
-
+            }*/
         readMessage(
-            auth.currentUser?.uid.toString(),
-            intent.getStringExtra("receiverId").toString(),
+                auth.currentUser?.uid.toString(),
+                intent.getStringExtra("receiverId").toString(),
                 "first"
         )
 
     }
+
+
 
     private fun readMessage(sender: String, receiver: String, time: String) {
         //val reference: DatabaseReference

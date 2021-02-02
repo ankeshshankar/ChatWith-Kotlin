@@ -8,8 +8,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.chatwith.app.R
 import com.chatwith.app.model.Message
+import com.chatwith.app.notify.Scroll
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import org.greenrobot.eventbus.EventBus
 import java.text.SimpleDateFormat
 
 @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
@@ -37,6 +39,7 @@ class MessageAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     @SuppressLint("SimpleDateFormat", "SetTextI18n")
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val lastPositions = -1
         val message = messageList[position]
         when (getItemViewType(position)) {
             RECEIVED -> {
@@ -64,6 +67,7 @@ class MessageAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 }
             }
         }
+
 
     }
 

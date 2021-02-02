@@ -18,6 +18,8 @@
             android:paddingTop="10dp"
             android:requiresFadingEdge="horizontal|vertical"
             android:visibility="visible"
+            android:scrollbarAlwaysDrawHorizontalTrack="true"
+
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentEnd="true"
